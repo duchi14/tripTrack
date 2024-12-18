@@ -31,9 +31,11 @@ import lombok.RequiredArgsConstructor;
 public class FileController {
 	private final FileService service;
 	private final PostService Postservice;
-	private final MemberService memberService;
-	private String REPOSITORT_DIR = "C:\\spring\\repository\\";
-	private String REPOSITORT_PROFILE = "C:\\spring\\repository\\profile\\";
+	private final MemberService memberService;	
+	private String REPOSITORY_DIR = "/Users/duchi/Documents/spring/repository/";
+	private String REPOSITORY_PROFILE = "/Users/duchi/Documents/spring/repository/profile/";
+	//private String REPOSITORT_DIR = "C:\\spring\\repository\\";
+	//private String REPOSITORT_PROFILE = "C:\\spring\\repository\\profile\\";
 	
 	
 
@@ -41,7 +43,7 @@ public class FileController {
 	public String fileUpload(@RequestParam("file") List<MultipartFile> fileList, ArticleDto ADto, LatLngDto LatDto) {
 		List<Map<String, String>> multifileList = new ArrayList<>();
 		int post_id = Postservice.getLastNum();
-		File Folder = new File(REPOSITORT_DIR+post_id);
+		File Folder = new File(REPOSITORY_DIR+post_id);
 			if(!Folder.exists()) {
 				try {
 					Folder.mkdir();
@@ -70,13 +72,13 @@ public class FileController {
 					multifileList.add(map);
 					dto.setPost_id(post_id);
 					dto.setFile_name(fileName);
-					dto.setFile_path(REPOSITORT_DIR);
+					dto.setFile_path(REPOSITORY_DIR);
 					dto.setOrg_file_name(fileList.get(i).getOriginalFilename());
 					service.uploadFile(dto);
 				}
 				
 				for(int i = 0; i < fileList.size(); i++) {
-					File uploadFile = new File(REPOSITORT_DIR+post_id+"\\"+multifileList.get(i).get("fileName"));
+					File uploadFile = new File(REPOSITORY_DIR+post_id+"\\"+multifileList.get(i).get("fileName"));
 					fileList.get(i).transferTo(uploadFile);
 				}
 				ADto.setPost_id(post_id);
@@ -96,7 +98,7 @@ public class FileController {
 		ModelAndView mav = new ModelAndView("myPage");
 		String user_id = principal.getName();
 		String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-		File Folder = new File(REPOSITORT_PROFILE+"\\"+user_id);
+		File Folder = new File(REPOSITORY_PROFILE+"\\"+user_id);
 		
 		if(!Folder.exists()) {
 			try {
@@ -119,11 +121,11 @@ public class FileController {
 				MemberDto member = memberService.getMemberByUserId(user_id);
 				FileDto dto = new FileDto();
 				dto.setFile_name(fileName);
-				dto.setFile_path(REPOSITORT_PROFILE+user_id);
+				dto.setFile_path(REPOSITORY_PROFILE+user_id);
 				
 				dto.setUser_id(user_id);
 				dto.setOrg_file_name(file.getOriginalFilename());
-				file.transferTo(new File(REPOSITORT_PROFILE+user_id+"\\" + fileName));
+				file.transferTo(new File(REPOSITORY_PROFILE+user_id+"\\" + fileName));
 				service.uploadProfile(dto);
 				
 				mav.addObject("message", "파일 업로드에 성공했습니다.");
@@ -135,11 +137,11 @@ public class FileController {
 				MemberDto member = memberService.getMemberByUserId(user_id);
 				FileDto dto = new FileDto();
 				dto.setFile_name(fileName);
-				dto.setFile_path(REPOSITORT_PROFILE+user_id);
+				dto.setFile_path(REPOSITORY_PROFILE+user_id);
 				
 				dto.setUser_id(user_id);
 				dto.setOrg_file_name(file.getOriginalFilename());
-				file.transferTo(new File(REPOSITORT_PROFILE+user_id+"\\" + fileName));
+				file.transferTo(new File(REPOSITORY_PROFILE+user_id+"\\" + fileName));
 				
 				service.uploadProfile(dto);
 				
@@ -162,7 +164,7 @@ public class FileController {
 	
 	@PostMapping("/delete")
 	public void fileDelete(String oldFile, String user_id) {
-		File file = new File(REPOSITORT_PROFILE+user_id+"\\"+ oldFile);
+		File file = new File(REPOSITORY_PROFILE+user_id+"\\"+ oldFile);
 		boolean result = file.delete();
 	}
 }
