@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb9600d8bae80e414e2826b3b5ebedc6&libraries=services"></script>
+<meta charset="UTF-8">
+<title>트랙 작성</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/readTrackPostForm.css}">
+</head>
+<section layout:fragment="content">
+	<div id="post_cntr">
+		<div id="map_box">
+			<div id="map"></div>
+		</div>
+		<div id="post_box">
+			<div id="slide_cntr">
+				<div class="swiper img_slide_top">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" th:if="${#lists.isEmpty(fileList)}">
+							<h2 id="empty_message">북마크한 페이지가 없습니다!</h2>
+							<img src="https://cdn.pixabay.com/photo/2018/08/01/21/26/map-3578213_1280.jpg">			
+						</div>
+						<div class="swiper-slide" th:unless="${fileList.isEmpty()}" th:each="file : ${fileList}">
+							<img name="image" th:src="@{/spring/repository/}+${file.post_id}+'/'+${file.file_name}"/>
+						</div>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
+				<div class="swiper img_slide_thumbs">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" th:if="${#lists.isEmpty(fileList)}">
+							<img src="https://cdn.pixabay.com/photo/2018/08/01/21/26/map-3578213_1280.jpg">
+						</div>
+						<div class="swiper-slide" th:unless="${fileList.isEmpty()}" th:each="file : ${fileList}">
+							<img name="image" th:src="@{/spring/repository/}+${file.post_id}+'/'+${file.file_name}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="gps_box">
+				<div class="gps_item" th:each="gpsDto : ${gpsList}">
+					<input name="lat" type="hidden" th:value="${gpsDto.lat}">
+					<input name="lng" type="hidden" th:value="${gpsDto.lng}">
+					<input name="placeName" type="hidden" th:value="${gpsDto.placeName}">
+					<div>
+						<i class="fa-solid fa-location-dot"></i>
+						<span th:text="${gpsDto.placeName}"></span>
+					</div>
+				</div>
+			</div>
+			<div id="text_box">
+				<div id="text_head">
+					<h2 id="title" th:text="${tpDto.title}"></h2>
+					<div id="userInfo">
+						<span id="profile">
+							<img th:if="${profile} != null" class="userProfile" th:src="@{/spring/repository/profile/}+${tpDto.user_id}+'/'+${profile}"  onerror="NoprofileImg(this)">
+							<img th:unless="${profile} != null" class="userProfile" th:src="@{/spring/repository/profile/}+Noprofile.png">
+						</span>
+						<span id="user_id" th:text="${tpDto.user_id}"></span>
+					</div>
+				</div>
+				<div id="content" th:text="${tpDto.content}"></div>
+			</div>
+		</div>
+	</div>
+ 	<script type="text/javascript" th:src="@{/js/postSlide.js}"></script>
+	<script type="text/javascript" th:src="@{/js/viewMarker.js}"></script>
+</section>
+</html>

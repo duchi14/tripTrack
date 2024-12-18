@@ -1,0 +1,216 @@
+@charset "UTF-8";
+section {
+	height:1300px;
+}
+#searchSelect {
+   display: none;
+}
+/* 마이페이지 게시글 관련 스타일 관리 */
+#myPage {
+	display: flex;
+	width:50%;
+}
+#menu, #page {
+	display: flex;
+	flex-direction: column;
+}
+#menu {
+	align-items: center;
+	width:30%;
+	border-right:1px solid #B0BEC5;
+}
+
+#page {
+	align-items: flex-start;
+	width:70%;
+	margin: 0 0 0 1%;
+}
+
+#menu > div {
+	width:90%;
+	cursor: pointer;
+	text-align: center;
+	font-weight:bold;
+	font-size:20px;
+	padding:5% 0 5% 0;
+	border-bottom:1px solid #B0BEC5;
+}
+#page > div {
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	width:100%;
+	display:none;
+}
+
+.bookmark_item > a, .post_item > a, .track_item > a {
+	display:block;
+	width:100%;
+	font-weight: bolder;
+	font-size:20px;
+	padding: 0 0 0 0;
+}
+.bookmark_item, .post_item, .track_item {
+	padding: 1%;
+	border: 2px solid gray;
+	border-radius:10px;
+	margin:0 0 1% 0;
+	transition: all 0.1s;
+	font-size:18px;
+	font-weight: bolder;
+}
+.bookmark_item:hover, .post_item:hover, .track_item:hover{
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px 0 rgba(0, 0, 0, 0.22);
+	border: 2px solid #4B89DC;
+}
+.bookmark_item {
+	position: relative;
+}
+
+.delbookmark {
+	position: absolute;
+	top:7px;
+	right:5px;
+	color:gray;
+	font-size:18px;
+	border: 2px solid #4B89DC;
+	border-radius:50%;
+}
+.delbookmark:hover {
+	color:#4B89DC;
+}
+.delbookmark > i {
+	pointer-events: none;
+}
+/* 프로필 추가 부분 스타일 관리 */
+.profileThum{
+	align-items:center;
+	justify-content:center;
+	border-radius:50%;
+	border: 3px solid #4B89DC;
+}
+
+#profilePoto, #void_img {
+	align-items:center;
+	justify-content:center;
+	width:200px;
+	height:200px;
+	border-radius:50%;
+	border: 3px solid #4B89DC;
+}
+
+#void_img {
+	background-color:#e2e2e2;
+}
+
+form[name="profile"] {
+	margin : 0 0 0 0;
+	padding-bottom : 0;
+}
+form[name="profile"] > * {
+	margin-bottom :1%;
+}
+input[type=submit] {
+	background-color: #81D4FA; /* 연한 하늘색 배경 */
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	border-radius: 5px;
+	padding: 10px;
+}
+input[type=submit]:hover {
+    background-color: #0288D1; /* 진한 하늘색 배경 */
+}
+/* 회원정보  */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    color: #0277BD; /* 진한 하늘색 */
+}
+
+.title {
+    text-align: right;
+    padding-right: 10px;
+    color: #0277BD; /* 진한 하늘색 */
+}
+
+.content input[type="text"],
+.content input[type="password"],
+.content input[type="email"],
+input[type="button"] {
+    width: calc(100% - 20px); /* 패딩을 고려한 너비 */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #B0BEC5; /* 연한 회색 테두리 */
+    border-radius: 5px;
+}
+
+input[type="button"] {
+    background-color: #81D4FA; /* 연한 하늘색 배경 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="button"]:hover {
+    background-color: #0288D1; /* 진한 하늘색 배경 */
+}
+
+.t_button {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.t_button input[type="button"] {
+    width: 30%;
+    margin: 5px;
+}
+
+/* 우편번호 및 주소 입력 필드 스타일 */
+.addr input[type="text"] {
+    width: calc(100% - 20px); /* 패딩을 고려한 너비 */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #B0BEC5; /* 연한 회색 테두리 */
+    border-radius: 5px;
+}
+
+.addr input[type="button"] {
+    width: auto;
+    background-color: #81D4FA; /* 연한 하늘색 배경 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addr input[type="button"]:hover {
+    background-color: #0288D1; /* 진한 하늘색 배경 */
+}
+
+/* 에러 메시지 스타일 */
+.errMsg {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+}
+
+.t_button > input {
+	width: 100px;
+}

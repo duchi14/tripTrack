@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>아이디 찾기 결과</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body>
+<section layout:fragment="content">
+ 	<h1>아이디 찾기 결과</h1>
+    <form>
+
+ 		<p>아이디: <span th:text="${user_id}"></span></p>
+
+    	<a th:href="@{/login.do}" class="id">로그인 페이지로 돌아가기</a>
+
+    </form>
+    </section>
+</body>
+</html>

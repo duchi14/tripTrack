@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+ <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+ <link rel="stylesheet" type="text/css" th:href="@{/css/join.css}">
+</head>
+<body>
+	<section layout:fragment="content">
+	<script src="http://code.jquery.com/jquery-Latest.min.js"></script>
+	<script	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script th:src="@{/js/join.js}"></script>
+	<h2>회원가입</h2>
+	<form name="join" th:action="@{join.do}" method="post">
+		<table>
+			<tr>
+				<td class="user_id">아이디</td>
+				<td><input type="text" name="user_id" placeholder="아이디를 입력해주세요" id="user_id"> 
+					<input type="button" id="checkId" value="중복검사">
+					<div><span id="result_checkId" style="font-size: 12px;"></span></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="user_pw">비밀번호</td>
+				<td><input type="password" id="user_pw1" name="user_pw"	placeholder="비밀번호를 입력해주세요">
+				     <label class="pw_show"><input type="checkbox">비밀번호 표시</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="user_pw2">비밀번호 확인</td>
+				<td><input type="password" name="user_pw2" placeholder="비밀번호를 확인해주세요" id="user_pw2" > 
+					<input type="button" id="checkPassword" value="비밀번호 확인" >
+					<div><span id="result_checkPassword" style="font-size: 12px;"></span></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="email">이메일</td>
+				<td><input type="email" name="email" placeholder="이메일을 입력해주세요" id="email"> 
+					<input type="button" id="checkEmail" value="중복검사">
+					<div><span id="result_checkEmail" style="font-size: 12px;"></span></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="nickname">닉네임</td>
+				<td><input type="text" name="nickname" placeholder="닉네임을 입력해주세요" id="nickname">
+					 <input type="button" id="checkNickname" value="중복검사">
+					 <div><span id="result_checkNickname" style="font-size: 12px;"></span></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="addr">주소</td>
+				<td><input type="text" name="addr" id="sample6_postcode" placeholder="우편번호">
+					<input type="button" onclick="sample6_execDaumPostcode()"value="우편번호 찾기"><br>
+					<input type="text" id="sample6_address" placeholder="주소"><br> 
+					<input type="text" id="sample6_detailAddress" placeholder="상세주소">
+					<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+				</td>
+			</tr>
+			<tr>
+				<td class="gender">성별</td>
+				<td>
+					<input type="radio" name="gender"  value="남성">남성
+					<input type="radio" name="gender"  value="여성">여성
+				</td>
+			</tr>
+			<tr>
+				<td class="tel">전화번호</td>
+				<td><input type="text" name="tel" placeholder="전화번호를 입력해주세요" id="tel">
+					<input type="button" id="checkTel" value="유효성">
+					<div><span id="result_checkTel" style="font-size: 12px;"></span></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 class="t_button">
+				<input type="button"value="회원가입" onclick="joinForm()">
+				<input type="button" value="다시쓰기" onclick="resetForm()">
+			</td>
+			</tr>
+		</table>
+	</form>
+	</section>
+</body>
+</html>

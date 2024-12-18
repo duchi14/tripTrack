@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<head>
+	<th:block th:if="${#strings.length(data.message) != 0}">
+		<script>
+			window.alert("[[${data.message}]]");
+		</script>
+	</th:block>
+	<th:block th:if="${#strings.length(data.href) != 0}">
+		<script>
+			window.location.href = '[[${data.href}]]';
+		</script>
+	</th:block>
+</head>
+</body>
+</html>

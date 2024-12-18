@@ -1,0 +1,108 @@
+@charset "UTF-8";
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+
+/* 메인배너 슬라이드 */
+.main_slide {
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	width:70%;
+	height:300px;
+	border-radius:20px;
+}
+
+.main_slide img {
+	width:100%;
+	height:100%;
+	object-fit: cover;
+}
+
+.swiper-button-prev, .swiper-button-next {
+	color:white;
+}
+ .swiper-button-prev:hover, .swiper-button-next:hover{
+	animation: flash 1s infinite;
+}
+
+#best_post_banner {
+	width: 70%;
+}
+
+#best_post_banner .swiper-button-prev, #best_post_banner .swiper-button-next{
+	top:40%;
+}
+
+.place_slide>.swiper-wrapper {
+	display: flex;
+}
+
+.thumbnail {
+	display: block;
+	margin-bottom: 5%;
+}
+
+.thumbnail img {
+	width: 100%;
+	height: 360px;
+	border-radius: 15px;
+}
+
+.star_box, .star_box * {
+	margin: 0;
+	padding: 0;
+}
+
+.star_box {
+	display: flex;
+}
+
+.track_info{
+	display:flex;
+	align-items:center;
+	position:absolute;
+	top:70%;
+	right:3%;
+	padding: 0.5%;
+	background-color:white;
+	border-radius:15px;
+}
+.track_title {
+	font-size:25px;
+	font-weight:bold;
+	margin-right:100px;
+}
+
+.track_profile {
+	display:block;
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	border: 2px solid #4B89DC;
+	margin-right:10px;
+}
+.track_profile img {
+	width:100%;
+	height:100%;
+	border-radius:50%;
+	object-fit: cover;
+}
+
+
+/* 베스트포스트 배너 양쪽 화살표 관리 */
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+.total-rate { display: inline-block;border: 0;margin-right:15px;padding:0px; margin-left: 0px;}
+.total-rate > input {display: none;}
+.total-rate > label {float: right;color: #ddd}
+.total-rate > label:before {display: inline-block;font-size: 1rem;padding: .3rem .2rem;margin: 0;cursor: default;font-family: FontAwesome;content: "\f005 ";}
+.total-rate .half:before {content: "\f089 "; position: absolute;padding-right: 0;}
+.total-rate input:checked ~ label, 
+.total-rate input:checked + .total-rate label,
+.total-rate input:checked ~ .total-rate label:hover ~ label,  
+.total-rate label:hover ~ input:checked ~ label { color: #4B89DC !important;  } 

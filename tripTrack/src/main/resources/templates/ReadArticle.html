@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<script type="text/javascript"
+	src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=eb9600d8bae80e414e2826b3b5ebedc6&libraries=services"></script>
+<script src="http://code.jquery.com/jquery-Latest.min.js"></script>
+<meta charset="UTF-8">
+<title>글읽기 확인</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/readArticle.css}">
+</head>
+<section layout:fragment="content">
+	<div class="post_cntr">
+		<div class="map_box">
+			<div id="map"></div>
+		</div>
+		<div class="post_box">
+			<div id="slide_cntr">
+				<div class="swiper img_slide_top">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" th:each="file : ${fileList}">
+							<img name="image"
+								th:src="@{/spring/repository/}+${rDto.post_id}+'/'+${file.file_name}"
+								onerror="failImg(this)" />
+						</div>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+				</div>
+				<div class="swiper img_slide_thumbs">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" th:each="file : ${fileList}">
+							<img name="image"
+								th:src="@{/spring/repository/}+${rDto.post_id}+'/'+${file.file_name}"
+								onerror="failImg(this)" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<table class="latLngTable">
+				<tr>
+					<td><input id="lat" name="lat" type="hidden"
+						th:value="${rDto.lat}"></td>
+					<td><input id="lng" name="lng" type="hidden"
+						th:value="${rDto.lng}"></td>
+					<td><input id="placeName" name="placeName" type="hidden"
+						th:value="${rDto.placeName}"></td>
+				</tr>
+			</table>
+			<!--  종합 점수 부분 -->
+			<div id="text_box">
+				<div id="title">
+					<h1 th:text="${rDto.title}"></h1>
+					<button title="여행지 정보를 저장합니다." id="bookmarkBtn" th:value="${rDto.post_id}" onclick="toggleBookmark(this)">
+						<i class="fa-solid fa-bookmark"></i>
+					</button>
+				</div>
+				<div class="star_box">
+					<input id="totalStar1" type="hidden" th:value="${avg}">
+					<table>
+						<tr>
+							<td>
+								<fieldset id="totalStar" class="total-rate">
+									<input type="checkbox" id="total10" name="total_point"
+										value="5.0" Disabled><label for="total10" title="5점"></label>
+									<input type="checkbox" id="total9" name="total_point"
+										value="4.5" Disabled><label class="half" for="total9"
+										title="4.5점"></label> <input type="checkbox" id="total8"
+										name="total_point" value="4.0" Disabled><label
+										for="total8" title="4점"></label> <input type="checkbox"
+										id="total7" name="total_point" value="3.5" Disabled><label
+										class="half" for="total7" title="3.5점"></label> <input
+										type="checkbox" id="total6" name="total_point" value="3.0"
+										Disabled><label for="total6" title="3점"></label> <input
+										type="checkbox" id="total5" name="total_point" value="2.5"
+										Disabled><label class="half" for="total5" title="2.5점"></label>
+									<input type="checkbox" id="total4" name="total_point"
+										value="2.0" Disabled><label for="total4" title="2점"></label>
+									<input type="checkbox" id="total3" name="total_point"
+										value="1.5" Disabled><label class="half" for="total3"
+										title="1.5점"></label> <input type="checkbox" id="total2"
+										name="total_point" value="1.0" Disabled><label
+										for="total2" title="1점"></label> <input type="checkbox"
+										id="total1" name="total_point" value="0.5" Disabled><label
+										class="half" for="total1" title="0.5점"></label>
+								</fieldset>
+							</td>
+							<td><input type="hidden" id="TStar" th:value="${avg}"></td>
+							<td><span th:text="${avg}"></span></td>
+						</tr>
+					</table>
+				</div>
+				<div id="tag_box">
+					<span class="tag" th:text="${rDto.city_name}"></span> <span
+						class="tag" th:text="${rDto.tag_name}"></span>
+				</div>
+				<p id="content" th:text="${rDto.content}"></p>
+			</div>
+		</div>
+	</div>
+	<div id="review_cntr">
+		<div id="review_write">
+			<h2>리뷰 등록</h2>
+			<h3 sec:authorize="isAnonymous()">로그인 후 이용하실 수 있습니다.</h3>
+			<form sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username != null}" id="frm" name="frm" action="review.do" method="post">	
+				<div class="star_box">
+					<fieldset id="rate" class="rate">
+						<input type="radio" id="rating10" name="star_point" value="10"><label
+							for="rating10" title="5점"></label> <input type="radio"
+							id="rating9" name="star_point" value="9"><label
+							class="half" for="rating9" title="4.5점"></label> <input
+							type="radio" id="rating8" name="star_point" value="8"><label
+							for="rating8" title="4점"></label> <input type="radio"
+							id="rating7" name="star_point" value="7"><label
+							class="half" for="rating7" title="3.5점"></label> <input
+							type="radio" id="rating6" name="star_point" value="6"><label
+							for="rating6" title="3점"></label> <input type="radio"
+							id="rating5" name="star_point" value="5"><label
+							class="half" for="rating5" title="2.5점"></label> <input
+							type="radio" id="rating4" name="star_point" value="4"><label
+							for="rating4" title="2점"></label> <input type="radio"
+							id="rating3" name="star_point" value="3"><label
+							class="half" for="rating3" title="1.5점"></label> <input
+							type="radio" id="rating2" name="star_point" value="2"><label
+							for="rating2" title="1점"></label> <input type="radio"
+							id="rating1" name="star_point" value="1"><label
+							class="half" for="rating1" title="0.5점"></label>
+					</fieldset>
+				</div>
+				<div id="review_title">
+					<h3>제목</h3>
+					<input type="text"  name="title">
+				</div>
+				<div id="review_content">
+					<h3>리뷰 작성</h3>
+					<textarea name="content"></textarea>
+				</div>
+				<input type="hidden" name="post_id" th:value="${rDto.post_id}">
+				<input sec:authorize="isAuthenticated()" id="session" name="user_id" type="hidden" th:value="${#authentication.principal.username}">
+				<input id="review_btn" type="button" value="저장" onclick="sendReview()">
+			</form>
+		</div>
+		<div id="review_list">
+			<h2>리뷰 리스트</h2>
+			<div th:if="${reviewList} != null">
+				<div class="review" th:each="reDto, reviewStart : ${reviewList}">
+					<input th:id="user + ${reviewStart.index}" type="hidden" name="user_id" th:value="${reDto.user_id}">
+					<input th:id="${reviewStart.index}" type="hidden" name="reviewStar" th:value="${reDto.star_point}">
+					<div class="user_info">
+						<span class="profile">
+							<img th:if="${reDto.proFile} == null" class="userProfile" th:src="@{/spring/repository/profile/}+Noprofile.png">
+							<img th:if="${reDto.proFile} != null" class="userProfile" th:src="@{/spring/repository/profile/}+${reDto.user_id}+'/'+${reDto.proFile}"  onerror="NoprofileImg(this)">
+						</span>
+						<span class="user_id" th:text="${reDto.user_id}"></span>
+					</div>
+					<div class="star_box">
+						<fieldset th:id="re + ${reviewStart.index}" class="review-rate">
+							<input type="checkbox" id="review10" name="review_point"
+							value="5.0" Disabled><label for="review10" title="5점"></label>
+							<input type="checkbox" id="review9" name="review_point"
+							value="4.5" Disabled><label class="half" for="review9"
+							title="4.5점"></label> <input type="checkbox" id="review8"
+							name="review_point" value="4.0" Disabled><label
+							for="review8" title="4점"></label> <input type="checkbox"
+							id="review7" name="review_point" value="3.5" Disabled><label
+							class="half" for="review7" title="3.5점"></label> <input
+							type="checkbox" id="review6" name="review_point" value="3.0"
+							Disabled><label for="review6" title="3점"></label> <input
+							type="checkbox" id="review5" name="review_point" value="2.5"
+							Disabled><label class="half" for="review5" title="2.5점"></label>
+							<input type="checkbox" id="review4" name="review_point"
+							value="2.0" Disabled><label for="review4" title="2점"></label>
+							<input type="checkbox" id="review3" name="review_point"
+							value="1.5" Disabled><label class="half" for="review3"
+							title="1.5점"></label> <input type="checkbox" id="review2"
+							name="review_point" value="1.0" Disabled><label
+							for="review2" title="1점"></label> <input type="checkbox"
+							id="review1" name="review_point" value="0.5" Disabled><label
+							class="half" for="review1" title="0.5점"></label>
+						</fieldset>
+					</div>
+					<div class="review_title" th:text="${reDto.title}"></div>
+					<div class="review_content" th:text="${reDto.content}"></div>
+					<div class="review_date" th:text="${reDto.localDate + '일에 작성된 리뷰입니다.'}"></div>
+					<div sec:authorize="isAuthenticated()">
+						<form th:if="${#authentication.principal.username == reDto.user_id}" method="post" action="delReview">
+							<input type="hidden" name="review_id" th:value="${reDto.review_id}">
+							<input type="hidden" name="post_id" th:value="${rDto.post_id}">
+							<button type="submit">삭제</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div th:if="${#lists.isEmpty(reviewList)}">
+				<h3>아직 작성된 리뷰가 없습니다!</h3>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/bookmark.js}"></script>
+	<script th:src="@{/js/article.js}"></script>
+	<script th:src="@{/js/viewMarker.js}"></script>
+</section>

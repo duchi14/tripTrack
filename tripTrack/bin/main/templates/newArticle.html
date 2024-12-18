@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>블로그 글</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/newArticle.css}">
+<script type="text/javascript"
+	src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=eb9600d8bae80e414e2826b3b5ebedc6&libraries=services"></script>
+</head>
+<section layout:fragment="content">
+	<div class="post_cntr">
+		<div class="map_box">
+			<div id="map"></div>
+			<div id="map_input">
+				<input type="text" id="search" placeholder="작성할 장소의 이름을 검색해주세요." onkeyup="if(window.event.keyCode==13){callSearch()}">
+				<button id="kakaoSearch" value="Search" onclick="callSearch()">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</div>
+		</div>
+		<div class="post_box">
+			<div id="image_container">
+				<span id ="void_img"></span>
+			</div>
+			<form name="upload" action="upload" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="user_id" name="user_id" th:value="${#authentication.principal.username}">
+				<div class="file_box">
+					<img id='output' onerror="this.style.display='none'"> 
+					<input
+						id="image" type="file" onchange="addfile(this);" name="file"
+						accept="image/gif,image/jpeg,image/png" multiple>
+					<div class="file-list"></div>
+				</div>
+				<table>
+					<tr>
+						<td><input type="hidden" name="lat"></td>
+						<td><input type="hidden" name="lng"></td>
+						<td><input type="hidden" name="placeName"></td>
+					</tr>
+				</table>
+				<div class="radio_cntr">
+					<div class="radio_box">
+						<label th:each="catDto:${catList}"> 
+							<input class="category_item" type="radio" name="category_name" th:value="${catDto.category_name}"/>
+							<span class="item_label" th:switch="${catDto.category_name}">
+								<i th:case="place" class="fa-solid fa-suitcase-rolling"> 관광</i>
+								<i th:case="rest" class="fa-solid fa-utensils"> 식당</i>
+								<i th:case="acc" class="fa-solid fa-bed"> 숙소</i>
+							</span>
+						</label>
+					</div>
+					<div class="radio_box">
+						<label th:each="locDto:${locList}"> <input
+							class="location_item" type="radio" name="city_name"
+							th:value="${locDto.city_name}"> <span class="item_label"
+							th:text="${locDto.city_name}"></span>
+						</label>
+					</div>
+					<div class="radio_box">
+						<label class="tag_item" th:each="tagDto:${tagList}"
+							th:data-catName="${tagDto.category_name}"> <input
+							type="radio" name="tag_name" th:value="${tagDto.tag_name}">
+							<span class="item_label" th:text="${tagDto.tag_name}"></span>
+						</label>
+					</div>
+				</div>
+		         <div class="text_box">
+					<h1>제목</h1>
+						<input type="text" class="title" placeholder="제목" name="title" readonly>
+					<h1>명소 작성</h1>
+						<textarea class="content" rows="10" placeholder="추천하시는 명소에 대해 작성해주세요!" name="content"></textarea>
+				</div>
+				<input type="button" value="작성완료" onclick="newArticleForm()">
+			</form>
+		</div>
+	</div>
+	<script th:src="@{/js/radioFilter.js}"></script>
+	<script th:src="@{/js/insertArticle.js}"></script>
+	<script th:src="@{/js/SearchCB.js}"></script>
+	<script th:src="@{/js/newArticle.js}"></script>
+</section>

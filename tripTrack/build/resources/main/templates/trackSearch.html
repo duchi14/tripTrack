@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>트랙 리스트</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/trackList.css}">
+</head>
+<section layout:fragment="content">
+	<div id="track_cntr">
+		<div class="track_list" th:each="dto, reviewStart : ${trackList}">
+			<a th:href="@{/viewTrackPost?post_id=}+${dto.trackPost_id}">
+				<span class="trackInfo">
+					
+						<span class="icon">
+							<i class="fa-solid fa-map-location-dot"></i>
+						</span>
+						<span class="title" th:text="${dto.title}"></span>
+					
+				</span>
+			</a>
+			<div class="userInfo">
+				<span class="profile">
+					<img th:if="${not #strings.isEmpty(dto.profile)}" class="userProfile" th:src="@{/spring/repository/profile/}+${dto.user_id}+'/'+${dto.profile}"  onerror="NoprofileImg(this)">
+					<img th:if="${#strings.isEmpty(dto.profile)}" class="userProfile" th:src="@{/spring/repository/profile/}+Noprofile.png">
+				</span>
+				<span class="user_id" th:text="${dto.user_id}"></span>
+			</div>
+		</div>
+	</div>
+	<div id="page_box" th:with="start=${pDto.getStartPage()}, end=${pDto.getEndPage()}">
+	<input id="nowPage" type="hidden" th:value="${pDto.getNowPage()}">
+		<span th:if="${pDto.getNowPage()} > 1">
+			<a th:href="@{/trackList(page=${1})}">
+				<i class="fa-solid fa-angles-left"></i>
+			</a>
+		</span>
+		<span th:if="${pDto.getNowPage()} > 1">
+			<a th:href="@{/trackList(page=${pDto.getNowPage()-1})}">
+				<i class="fa-solid fa-chevron-left"></i>
+			</a>
+		</span>
+		<span class="page" th:data-page="${page}" th:each="page: ${#numbers.sequence(start, end)}">
+			<a th:text="${page}" th:href="@{/trackList(page=${page})}"></a>
+		</span>
+		<span th:if="${pDto.getNowPage()} < ${pDto.getMaxPage()}">
+			<a th:href="@{/trackList(page=${pDto.getNowPage()+1})}">
+				<i class="fa-solid fa-chevron-right"></i>
+			</a>
+		</span>
+		<span th:if="${pDto.getNowPage()} < ${pDto.getMaxPage()}">
+			<a th:href="@{/trackList(page=${pDto.getMaxPage()})}">
+				<i class="fa-solid fa-angles-right"></i>
+			</a>
+		</span>
+	</div>
+	<script type="text/javascript" th:src="@{/js/paging.js}"></script>
+</section>
+</html>

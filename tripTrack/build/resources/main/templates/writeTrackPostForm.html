@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=eb9600d8bae80e414e2826b3b5ebedc6&libraries=services"></script>
+	<script src="http://code.jquery.com/jquery-Latest.min.js"></script>
+<meta charset="UTF-8">
+<title>트랙 작성</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/writeTrackPostForm.css}">
+</head>
+<section layout:fragment="content">
+	<h1 id="guide">나만의 여행 루트를 작성해보세요!</h1>
+	<div id="post_cntr">	
+		<div class="map_box">
+			<div id="map"></div>
+			<input type="text" id="search" placeholder="작성할 장소의 이름을 검색해주세요." onkeyup="if(window.event.keyCode==13){callSearch()}"> 
+            <button id="kakaoSearch" value="Search" onclick="callSearch()">
+            	<i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button id="reset_btn" value="delete" onclick="deleteRute()">
+            	<i class="fa-solid fa-arrow-rotate-right"></i>
+            </button>
+		</div>
+		<div id="post_box">
+			<form name="upload" th:action="@{/writeTrackPost}" th:object="${trackPostDto}" method="post">
+				<div id="bookmark_box">
+					<h1>북마크 리스트</h1>
+					<div class="bookmark" th:each="dto : ${bmList}" th:data-postId="${dto.post_id}">
+						<span th:switch="${dto.category_name}">
+							<i th:case="place" class="fa-solid fa-suitcase-rolling"></i>
+							<i th:case="rest" class="fa-solid fa-utensils"></i>
+							<i th:case="acc" class="fa-solid fa-bed"></i>
+						</span>
+						<span th:text="${dto.tag_name}"></span>
+						<span th:text="${dto.city_name}"></span>
+						<span th:text="${dto.placeName}"></span> 
+ 						
+						<input type="hidden" name="Booklat" th:value="${dto.lat}"> 
+						<input type="hidden" name="Booklng" th:value="${dto.lng}"> 
+						<input type="hidden" name="BookPlaceName" th:value="${dto.placeName}">
+						<input class="GPSsave" type="button" onclick="GPSsave(this)">
+						<i class="fa-solid fa-location-dot"></i>
+					</div>
+				</div>
+				<div id="postIdBox"></div>
+				<div id="latlngbox"></div>
+				<p id="ptag"></p>
+				<h1>제목</h1>
+				<input type="text" class="title" placeholder="제목" name="title">
+				<h1>내용</h1>
+				<textarea class="content" rows="10" placeholder="작성하신 트랙에 대해 설명해주세요!" name="content"></textarea>		
+				<input type="button" value="작성완료" onclick="trackForm()">
+			</form>
+		</div>
+	</div>
+	<script th:src="@{/js/GPSSave.js}"></script>
+	<script th:src="@{/js/trackForm.js}"></script>
+</section>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+</head>
+<body>
+	<section layout:fragment="content">
+		<script src="http://code.jquery.com/jquery-Latest.min.js"></script>
+		<script th:src="@{/js/login.js}"></script>
+		<h1>로그인</h1>
+		<br>
+		<form name="login" th:action="@{login.do}" method="post">
+			<div th:if="${param.error}">
+				<span class="errMsg"> 사용자ID 또는 비밀번호를 확인해 주세요.</span>
+			</div>
+			<table>
+				<tr>
+					<td class="title">아이디</td>
+					<td class="content"><input type="text" name="username" onkeyup="if(window.event.keyCode==13){loginForm()}"></td>
+				</tr>
+				<tr>
+					<td class="title">비밀번호</td>
+					<td class="content"><input type="password" name="password" id="password" onkeyup="if(window.event.keyCode==13){loginForm()}">
+					<label class="pw_show">
+					<input type="checkbox">비밀번호 표시</label></td>
+				</tr>
+				<tr>
+					<td colspan=2 class="t_button">
+						<input type="button" value="로그인" onclick="loginForm()" >
+						<input type="button" value="회원가입" th:onclick="|location.href='@{/join.do}'|">
+					</td>
+				</tr>
+				 <tr>
+                    <td colspan=2 class="t_button">
+                        <a th:href="@{/findUsername.do}" class="ckid">아이디 찾기</a> 
+                        <a th:href="@{/findPassword.do}" class="ckpw">비밀번호 찾기</a>
+                    </td>
+                </tr>
+			</table>
+		</form>
+	</section>
+</body>
+</html>

@@ -1,0 +1,113 @@
+@charset "UTF-8";
+.location_info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin-top: 1%;
+}
+
+.location_banner {
+	width: 100%;
+	height: 450px;
+}
+
+.location_intro {
+	width: 70%;
+}
+
+.location_banner img {
+	width: 100%;
+	height: 450px;
+	object-fit: cover;
+}
+
+.location_cityList {
+	width: 70%;
+}
+
+.thumbnail {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.see_more {
+	display: flex;
+	justify-content: flex-end;
+}
+/* 슬라이드 관리 */
+.placeList_slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.accList_slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.restList_slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.location_banner .swiper-slide {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+/* 양쪽 화살표 관리 */
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.placeList_slide .swiper-button-prev {
+	top: 35%;
+	color: white;
+}
+
+.placeList_slide .swiper-button-next {
+	top: 35%;
+	color: white;
+}
+
+.accList_slide .swiper-button-prev {
+	top: 35%;
+	color: white;
+}
+
+.accList_slide .swiper-button-next {
+	top: 35%;
+	color: white;
+}
+
+.restList_slide .swiper-button-prev {
+	top: 35%;
+	color: white;
+}
+
+.restList_slide .swiper-button-next {
+	top: 35%;
+	color: white;
+}
+
+.location_banner .swiper-button-next {
+	color: white;
+}
+
+.location_banner .swiper-button-prev {
+	color: white;
+}
+
+.swiper-button-prev:hover {
+	animation: flash 1s infinite;
+}
+
+.swiper-button-next:hover {
+	animation: flash 1s infinite;
+}

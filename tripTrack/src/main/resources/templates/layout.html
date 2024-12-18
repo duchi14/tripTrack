@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" th:href="@{/image/tripTrack_favicon.ico}">
+<!-- 스와이퍼 슬라이더 cdn -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- 폰트어썸 -->
+<link rel="shortcut icon" th:href="#{/favicon.ico}">
+<script src="https://kit.fontawesome.com/ca27c430fc.js" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/changeSearch.js}"></script>
+<script type="text/javascript" th:src="@{/js/profile.js}"></script>
+</head>
+<body>
+	<header>
+		<nav class="menu_bar">
+			<div class="logo">
+				<a th:href="@{/}">
+					<img th:src="@{/image/logo.png}">
+				</a>
+			</div>
+			<div class="main_menu">
+				<div class="menu_item">
+					<a th:href="@{/trackList?page=1}">트랙</a>
+				</div>
+				<div class="menu_item">
+					<a th:href="@{/new-article}">
+					명소 작성
+					</a>
+				</div>
+				<div class="menu_item">
+					<a th:href="@{/new-track}">
+						트랙 작성
+					</a>
+				</div>
+				<div class="menu_item">
+					<a th:unless="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/login.do}">마이페이지</a>
+					<a th:href="@{/page.do?user_id=} + ${#authentication.principal.username}" th:if="${#authorization.expression('hasRole(''USER'')')}">마이페이지</a>
+				</div>
+			</div>
+			<div class="login_menu">
+				<div class="menu_item">
+					<a sec:authorize="isAnonymous()" th:href="@{/login.do}">로그인</a>
+						<img class="layout_profile" sec:authorize="isAuthenticated()" th:src="@{/spring/repository/profile/}+${#authentication.principal.username}+'/'+${session.profile}" onerror="NoprofileImg(this)">
+						<a sec:authorize="isAuthenticated()" th:href="@{/page.do?user_id=} + ${#authentication.principal.username}"><span sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username}"></span></a>
+						<a sec:authorize="isAuthenticated()" th:href="@{/logout.do}">
+						<span th:text="로그아웃"></span>
+					</a>
+				</div>
+				<div class="menu_item" th:unless="${#authorization.expression('hasRole(''USER'')')}">
+					<a th:href="@{/join.do}">회원가입</a>
+				</div>
+			</div>
+		</nav>
+<div id="searchSelect">
+    <div id="label_box">
+        <label>
+            <input type="radio" name="filter" value="searchForm" checked onclick="toggleSearchForm()">
+            <span>여행지 검색</span>
+        </label>
+        <label>
+            <input type="radio" name="filter" value="trackSearchForm" onclick="toggleSearchForm()">
+            <span>여행 루트 검색</span>
+        </label>
+    </div>
+    <div id="searchfilter">
+        <form id="searchForm" action="/search" method="GET">
+            <input type="search" name="searchValue" placeholder="여행지, 식당, 숙소를 검색..." />
+        </form>
+        <form id="trackSearchForm" action="/trackSearch" method="GET" style="display:none;">
+            <input type="search" name="searchValue" placeholder="여행지 루트를 검색해보세요" />
+        </form>
+    </div>
+</div>
+		<div class="category_cntr">
+			<div class="category_box">
+				<a th:each="catDto:${catList}" 
+					th:href="@{|/${catDto.category_name}?page=${1}|}"
+					th:switch="${catDto.category_name}" class="category_item"> 
+					<i th:case="place" class="fa-solid fa-suitcase-rolling"> 관광</i>
+					<i th:case="rest" class="fa-solid fa-utensils"> 식당</i> 
+					<i th:case="acc" class="fa-solid fa-bed"> 숙소</i>
+				</a>
+			</div>
+		</div>
+		<input id="loginedUserId" type="hidden" th:if="${author} != null" th:value="${author}">
+		<input id="loginedUserId" type="hidden" th:unless="${author} != null" th:value="notLogined">
+		<div id="remocon">
+			<button id="rollUp" onclick=""><i class="fa-solid fa-chevron-up"></i></button>
+			<button onclick="history.back()"><i class="fa-solid fa-chevron-left"></i></button>
+			<button id="rollDown"><i class="fa-solid fa-chevron-down"></i></button>
+		</div>
+		<script type="text/javascript" th:src="@{/js/remocon.js}"></script>
+	</header>
+	<th:block layout:fragment="content"></th:block>
+	
+</body>
+<footer>
+	<p>copyright &copy; 2024 KOREA INFORMATION TECHNOLOGY ACADEMY. ALL RIGHTS RESERVED</p>
+</footer>
+</html>

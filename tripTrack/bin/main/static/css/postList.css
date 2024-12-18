@@ -1,0 +1,145 @@
+@charset "UTF-8";
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+section {
+	height:100vh;
+}
+
+.filter_cntr {
+	width: 80%;
+}
+
+.location_filter_box {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	
+}
+
+.tag_filter_box {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	
+}
+label {
+	margin:1% 1% 1% 0;
+}
+.post_box {
+	display: grid;
+	width: 80%;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+}
+
+.post {
+	position: relative;
+	display: flex;
+	margin: 3%;
+	padding: 2%;
+	border: 2px solid gray;
+	border-radius:10px;
+	transition: all 0.1s;
+}
+.post:hover {
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px 0 rgba(0, 0, 0, 0.22);
+	border: 2px solid #4B89DC;
+}
+.thumbnail {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+	width: 100%;
+	height: 200px;
+	width: 100%;
+}
+
+.image{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+	width: 100%;
+	height: 200px;
+	width: 100%;
+}
+
+.thumbnail > .a{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+	width: 100%;
+	height: 200px;
+	width: 100%;
+}
+
+input[type=checkbox] {
+	display:none;
+}
+input[type=checkbox]:checked + .item_label{
+	background-color: #4B89DC;
+	color: white;
+}
+
+.item_label {
+	background-color: white;
+	color: black;
+	border: 2px solid #4B89DC;
+	border-radius: 15px;
+	padding: 4px;	
+}
+.star_box {
+	display:flex;
+	
+}
+.star_box *{
+	margin:0;
+	padding:0;
+}
+.bookmark {
+	position:absolute;
+	width:40px;
+ 	height:40px;
+ 	font-size:23px;
+ 	border: 2px solid #4B89DC;
+ 	border-radius:50%;
+ 	cursor: pointer;
+ 	color: gray;
+ 	top:15px;
+ 	right:15px;
+}
+.bookmark:hover {
+ 	color:#4B89DC;
+}
+#page_box {
+	 display: flex;
+}
+#page_box span{
+	justify-content: center;
+    align-items: center;
+    display: flex;
+
+	margin:0 5px 0 5px;
+}
+#page_box button{
+	border:none;
+	cursor:pointer;
+	font-size:16px;
+}
+
+#page_box a > i {
+	display:inline;
+	width:0;
+}
+
+.rate { display: inline-block;border: 0;margin-right:15px;padding:0px; margin-left: 0px;}
+.rate > input {display: none;}
+.rate > label {float: right;color: #ddd}
+.rate > label:before {display: inline-block;font-size: 1rem;padding: .3rem .2rem;margin: 0;cursor: default;font-family: FontAwesome;content: "\f005 ";}
+.rate .half:before {content: "\f089 "; position: absolute;padding-right: 0;}
+.rate input:checked ~ label, 
+.rate input:checked + .rate label,
+.rate input:checked ~ .rate label:hover ~ label,  
+.rate label:hover ~ input:checked ~ label { color: #4B89DC !important;  } 
+

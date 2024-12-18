@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>마이페이지</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/myPage.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<section layout:fragment="content">
+		<input id="bmchkLoginedUserId" type="hidden" th:value="${#authentication.principal.username}">
+		<h1>마이페이지</h1>
+		<div id="myPage">
+			<div id="menu">
+				<div class="member_info">회원정보</div>
+				<div class="post">내가 작성한 글</div>
+				<div class="bookmark">나의 북마크</div>
+				<div class="track">나의 트랙</div>
+			</div>
+			<div id="page">
+				<div class="member_info">
+					<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
+					<form name="profile" action="profile" method="post" enctype="multipart/form-data">
+						<div id="profile" th:if="${fileName} != null">
+							<img id="profilePoto" th:src="@{/spring/repository/profile/}+${user_id}+'/'+${fileName}" onerror="failImg(this)">
+						</div>
+						<div id="image_container">
+							<img th:unless="${fileName} != null"  id="void_img" th:src="@{/spring/repository/profile/Noprofile}"></img>
+						</div>
+						<input id="image" type="file" onchange="addfile(this);" name="file" accept="image/jpeg,image/png">
+						<input type="submit" value="프로필 사진 변경">
+					</form>
+					<form name="mypage" th:action="@{/page.do}" method="get" id="frm">
+						<span th:text="${member.nickname}"></span> 
+						<input sec:authorize="isAuthenticated()" name="user_id" type="hidden" th:value="${#authentication.principal.username}">
+						<table>
+							<tr>
+								<td class="user_pw">비밀번호</td>
+								<td class="content"><input type="text" name="user_pw"
+									id="user_pw1"></td>
+							</tr>
+							<tr>
+								<td class="user_pw2">비밀번호 확인</td>
+								<td class="content"><input type="password" name="user_pw2"
+									placeholder="비밀번호를 확인해주세요" id="user_pw2"> <input
+									type="button" id="checkPassword" value="중복검사">
+									<div>
+										<span id="result_checkPassword" style="font-size: 12px;"></span>
+									</div></td>
+							</tr>
+							<tr>
+								<td class="email">이메일</td>
+								<td class="content"><input type="email" name="email"
+									placeholder="이메일을 입력해주세요" id="email" th:value="${member.email}">
+									<input type="button" id="checkEmail" value="중복검사">
+									<div>
+										<span id="result_checkEmail" style="font-size: 12px;"></span>
+									</div></td>
+							</tr>
+							<tr>
+								<td class="nickname">닉네임:</td>
+								<td class="content"><input type="text" name="nickname"
+									placeholder="닉네임을 입력해주세요" id="nickname"
+									th:value="${member.nickname}"> <input type="button"
+									id="checkNickname" value="중복검사">
+									<div>
+										<span id="result_checkNickname" style="font-size: 12px;"></span>
+									</div></td>
+							</tr>
+							<tr>
+								<td class="addr">주소</td>
+								<td class="content"><input type="text" name="addr"
+									id="sample6_postcode" placeholder="우편번호"
+									th:value="${member.addr}"> <input type="button"
+									onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+									<input type="text" id="sample6_address" placeholder="주소"><br>
+									<input type="text" id="sample6_detailAddress"
+									placeholder="상세주소"> <input type="text"
+									id="sample6_extraAddress" placeholder="참고항목"></td>
+							</tr>
+							<tr>
+								<td class="tel">전화번호</td>
+								<td class="content"><input type="text" name="tel"
+									placeholder="전화번호를 입력해주세요" id="tel" th:value="${member.tel}">
+									<input type="button" id="checkTel" value="유효성 검사">
+									<div>
+										<span id="result_checkTel" style="font-size: 12px;"></span>
+									</div></td>
+							</tr>
+							<tr>
+								<td colspan=2 class="t_button"><input type="button"
+									id="edit" value="수정하기" onclick="pageForm()"> <input
+									type="button" id="delete" value="탈퇴하기" onclick="delMember()">
+									<input type="button" value="다시쓰기" onclick="resetForm()">
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="post">
+					<div th:if="${#lists.isEmpty(postList)}">
+						<h3>작성한 게시글이 없습니다!</h3>
+					</div>
+				 	<div id="postContainer"></div>
+				    <div class="pagination" id="pagination"></div>
+				</div>
+				<div class="bookmark">
+					<div th:if="${#lists.isEmpty(bookmarklist)}">
+						<h3>북마크한 게시글이 없습니다!</h3>
+					</div>
+					<div class="bookmark_item" th:each="bookmark : ${bookmarklist}">
+						<a th:href="@{/Viewarticles?post_id=}+${bookmark.post_id}">
+							<span th:switch="${bookmark.category_name}">
+								<i th:case="place" class="fa-solid fa-suitcase-rolling"></i>
+								<i th:case="rest" class="fa-solid fa-utensils"></i>
+								<i th:case="acc" class="fa-solid fa-bed"></i>
+							</span>
+							<span th:text="${bookmark.tag_name} + ', '"></span>
+							<span th:text="${bookmark.city_name}"></span>
+							<span th:text="${bookmark.placeName}" ></span>
+						</a>
+						<button class="delbookmark" onclick="deleteBookmark(this)" th:value="${bookmark.post_id}" title="북마크를 삭제합니다.">
+							<i class="fa-regular fa-trash-can"></i>
+						</button>
+					</div>
+				</div>
+				<div class="track">
+					<div th:if="${#lists.isEmpty(trackList)}">
+						<h3>작성하신 여행루트가 없습니다!</h3>
+					</div>
+					<div id="trackPostContainer"></div>
+				    <div class="track_pagination" id="track_pagination"></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" th:src="@{/js/deleteBookmark.js}"></script>
+  		<script type="text/javascript" th:src="@{/js/myPage.js}"></script>
+	</section>
+</body>
+</html>

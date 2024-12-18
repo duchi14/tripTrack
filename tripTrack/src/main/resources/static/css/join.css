@@ -1,0 +1,96 @@
+
+
+#searchSelect {
+   display: none;
+}
+
+h2 {
+    color: #0277BD; /* 진한 하늘색 */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+	display:flex;
+   	justify-content: center;
+   	align-items: center;
+    background-color: #FFFFFF; /* 흰색 배경 */
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+} 
+
+table {
+    width: 100%;
+}
+
+td {
+    padding: 10px;
+    color: #0277BD; /* 진한 하늘색 */
+}
+.user_pw2 {
+	width:120px;
+}
+.pw_show {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.pw_show input[type="checkbox"] {
+	margin-right: 5px; /* 체크박스와 텍스트 사이의 간격 조정 */
+    cursor: pointer; 
+}
+
+.pw_show label {
+    cursor: pointer; /* 라벨도 마우스 커서를 포인터로 변경하여 클릭 가능한 것처럼 보이도록 설정 */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="button"] {
+    width: calc(100% - 20px); /* 패딩을 고려한 너비 */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #B0BEC5; /* 연한 회색 테두리 */
+    border-radius: 5px;
+}
+
+.phone1{
+	width: 100px;
+}
+
+input[type="button"] {
+    background-color: #81D4FA; /* 연한 하늘색 배경 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="button"]:hover {
+    background-color: #0288D1; /* 진한 하늘색 배경 */
+}
+
+.t_button {
+    text-align: center;
+}
+
+.t_button input[type="button"] {
+    width: 45%;
+    margin: 5px;
+}
+
+/* 결과 텍스트 스타일 */
+#result_checkId,
+#result_checkPassword,
+#result_checkEmail,
+#result_checkNickname {
+    color: #0277BD; /* 진한 하늘색 */
+    display: block;
+    margin-top: 2px;
+}
