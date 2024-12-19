@@ -65,7 +65,7 @@ function addfile(event) {
 }
 
 function validation(obj) {
-	const fileTypes = ['image/gif', 'image/jpeg', 'image/png'];
+	const fileTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
 	if (!fileTypes.includes(obj.type)) {
 		alert("첨부가 불가능한 파일입니다.");
 		document.querySelector("input[type=file]").value = "";
