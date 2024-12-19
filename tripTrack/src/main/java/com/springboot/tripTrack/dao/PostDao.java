@@ -21,13 +21,13 @@ public interface PostDao {
 	public String LastNum() throws DataAccessException;
 
 	@Select("select p.post_id, p.title, p.content, p.city_name, p.tag_name, g.lat, g.lng, g.placeName from tbl_post as p\r\n"
-			+ "join tbl_gps as g\r\n" + "on p.post_id = g.post_id\r\n" + "where p.post_id = #{post_id}")
+			+ "join tbl_GPS as g\r\n" + "on p.post_id = g.post_id\r\n" + "where p.post_id = #{post_id}")
 	public ReadArticleDto findById(int post_id) throws DataAccessException;
 
 	@Insert("insert into tbl_post(post_id, board_id, category_name, city_name,tag_name, user_id, title,content) values(#{post_id}, 1, #{category_name}, #{city_name},#{tag_name},#{user_id},#{title}, #{content})")
 	public void insertPost(ArticleDto ADto) throws DataAccessException;
 
-	@Insert("insert into tbl_gps(post_id, lat,lng,placeName) values(#{post_id},#{lat}, #{lng},#{placeName})")
+	@Insert("insert into tbl_GPS(post_id, lat,lng,placeName) values(#{post_id},#{lat}, #{lng},#{placeName})")
 	public void insertLatlng(LatLngDto LatDto) throws DataAccessException;
 
 	@Select("SELECT p.post_id, p.title, p.tag_name, p.category_name, p.city_name, avg(s.star_point) AS avg_star, count(s.star_point) as cnt_star \r\n"
@@ -41,7 +41,7 @@ public interface PostDao {
 	@Select("SELECT * FROM tbl_post WHERE MATCH (city_name, tag_name, title, content) AGAINST (#{searchValue} in boolean mode) limit #{startRow}, #{limitPage}")
 	public List<PostDto> findList(@Param("searchValue") String searchValue, @Param("startRow") int startRow, @Param("limitPage") int limitPage) throws DataAccessException;
 	
-	@Select("select lat, lng, placeName from tbl_gps where post_id = #{post_id}")
+	@Select("select lat, lng, placeName from tbl_GPS where post_id = #{post_id}")
 	public BookmarkDto selectGPS(int post_id) throws DataAccessException;
 	
 	@Select("SELECT count(post_id) as count FROM tbl_post WHERE MATCH (city_name, tag_name, title, content) AGAINST (#{searchValue} in boolean mode)")

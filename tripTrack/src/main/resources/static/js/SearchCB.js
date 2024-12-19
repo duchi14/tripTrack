@@ -16,8 +16,7 @@ var options = {
 		level: 3
 	};
 
-
-var map = new kakao.maps.Map(container, options);
+	var map = new kakao.maps.Map(container, options);
 
 function callSearch(){
 	var search = document.getElementById('search').value;

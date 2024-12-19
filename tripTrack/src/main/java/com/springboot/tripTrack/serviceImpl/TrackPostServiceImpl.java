@@ -100,9 +100,17 @@ public class TrackPostServiceImpl implements TrackPostService {
 		String lat = tpDto.getLat();
 		String lng = tpDto.getLng();
 		String placeName = tpDto.getPlaceName();
+		
+		 // null 체크 후 빈 문자열로 처리하거나 적절한 값을 사용
+	    if (lat == null) lat = "";
+	    if (lng == null) lng = "";
+	    if (placeName == null) placeName = "";
+		
 		String[] latArray = lat.split(",");
 		String[] lngArray = lng.split(",");
 		String[] placeNameArray = placeName.split(",");
+		
+		int length = Math.min(latArray.length, Math.min(lngArray.length, placeNameArray.length));
 
 		for (int i = 0; i < latArray.length; i++) {
 			LatLngDto gps = new LatLngDto();

@@ -105,11 +105,11 @@ public class PostServiceImpl implements PostService {
 		return pDao.selectPostListByUserId(user_id);
 	}
 	//페이징
-    public Page<PostDto> findPostsByUserId(String userId, PageRequest pageRequest) {
+    public Page<PostDto> findPostsByUserId(String user_id, PageRequest pageRequest) {
         int limit = pageRequest.getPageSize();
         int offset = (int) pageRequest.getOffset();
-        List<PostDto> postList = pDao.findPostsByUserId(userId, limit, offset);
-        int total = pDao.countPostsByUserId(userId);
+        List<PostDto> postList = pDao.findPostsByUserId(user_id, limit, offset);
+        int total = pDao.countPostsByUserId(user_id);
         
         return new PageImpl<>(postList, pageRequest, total);
     }

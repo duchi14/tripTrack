@@ -12,8 +12,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/spring/**")
-		.addResourceLocations("file:///C:/spring/repository")
+		registry.addResourceHandler("/spring/repository/profile/**")
+		.addResourceLocations("file:/Users/duchi/Documents/spring/repository/")
+		.addResourceLocations("file:/Users/duchi/Documents/spring/repository/profile")
 		.setCacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES));
 	}
 }
